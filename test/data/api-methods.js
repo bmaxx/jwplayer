@@ -18,6 +18,7 @@ export default {
     getBuffer: null,
     getCaptions: null,
     getCaptionsList: null,
+    getActiveCues: null,
     getConfig: null,
     getContainer: null,
     getControls: null,

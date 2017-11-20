@@ -617,6 +617,7 @@ const Model = function() {
 
     this.setVideoSubtitleTrack = function(trackIndex, tracks) {
         this.set('captionsIndex', trackIndex);
+        this.set('captionsActiveCues', []);
         /*
          * Tracks could have changed even if the index hasn't.
          * Need to ensure track has data for captionsrenderer.

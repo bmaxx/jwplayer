@@ -285,6 +285,15 @@ export default function Api(element) {
         },
 
         /**
+         * Gets the list of active video text tract (VTT) cues currently rendered to the display.
+         * If no cues are currently rendered, then an empty array is returned.
+         * @returns {Array.<VTTCue>}
+         */
+        getActiveCues() {
+            return core.get('captionsActiveCues');
+        },
+
+        /**
          * Gets a static representation of the player's model.
          * @returns {object}
          */

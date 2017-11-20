@@ -263,6 +263,7 @@ describe('Api', function() {
         expect(api.getCaptions(), '.getCaptions()').to.equal(undefined);
         expect(api.getControls(), '.getControls()').to.equal(undefined);
         expect(api.getCurrentCaptions(), '.getCurrentCaptions()').to.equal(undefined);
+        expect(api.getActiveCues(), '.getActiveCues()').to.equal(undefined);
         expect(api.getFullscreen(), '.getFullscreen()').to.equal(undefined);
         expect(api.getHeight(), '.getHeight()').to.equal(undefined);
         expect(api.getWidth(), '.getWidth()').to.equal(undefined);
@@ -311,6 +312,7 @@ describe('Api', function() {
         expect(api.getCaptions(), '.getCaptions()').to.equal(undefined);
         expect(api.getControls(), '.getControls()').to.equal(true);
         expect(api.getCurrentCaptions(), '.getCurrentCaptions()').to.equal(undefined);
+        expect(api.getActiveCues(), '.getActiveCues()').to.equal(undefined);
         expect(api.getFullscreen(), '.getFullscreen()').to.equal(undefined);
         expect(api.getHeight(), '.getHeight()').to.equal(undefined);
         expect(api.getWidth(), '.getWidth()').to.equal(undefined);

@@ -69,6 +69,7 @@ const CaptionsRenderer = function (_model) {
         updateBoxPosition = !!updateBoxPosition;
         if (_WebVTT) {
             _WebVTT.processCues(window, _currentCues, _display, updateBoxPosition);
+            _model.set("captionsActiveCues", _currentCues);
         }
     };
 
