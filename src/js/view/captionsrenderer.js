@@ -50,10 +50,10 @@ const CaptionsRenderer = function (_model) {
             return;
         }
 
-        _currentCues = [];
+        this.setCurrentCues([]);
         _captionsTrack = captions;
         if (!captions) {
-            _currentCues = [];
+            this.setCurrentCues([]);
             this.renderCues();
             return;
         }
@@ -69,7 +69,6 @@ const CaptionsRenderer = function (_model) {
         updateBoxPosition = !!updateBoxPosition;
         if (_WebVTT) {
             _WebVTT.processCues(window, _currentCues, _display, updateBoxPosition);
-            _model.set("captionsActiveCues", _currentCues);
         }
     };
 
@@ -86,7 +85,10 @@ const CaptionsRenderer = function (_model) {
         const cues = this.getCurrentCues(track.data, pos);
 
         this.updateCurrentCues(cues);
-        this.renderCues(true);
+
+        if (!_model.get('renderCaptionsNatively')) {
+            this.renderCues(true);
+        }
     };
 
     this.getCurrentCues = function (allCues, pos) {
@@ -98,12 +100,30 @@ const CaptionsRenderer = function (_model) {
     this.updateCurrentCues = function (cues) {
         // Render with vtt.js if there are cues, clear if there are none
         if (!cues.length) {
-            _currentCues = [];
+            cues = [];
         } else if (_.difference(cues, _currentCues).length) {
             addClass(_captionsWindow, 'jw-captions-window-active');
-            _currentCues = cues;
         }
 
+        return this.setCurrentCues(cues);
+    };
+
+    this.setCurrentCues = function(cues) {
+        // native rendering already has the captionsTrack.activeCues
+        if (!_model.get('renderCaptionsNatively')) {
+            let captionsTrack = _model.get('captionsTrack');
+            if (captionsTrack) {
+                // mimic the VTTCueList object of activeCues
+                let activeCues = { length: 0 };
+                cues.forEach(function(item, index) {
+                    activeCues[index] = item;
+                });
+                activeCues.length = cues.length;
+                captionsTrack.activeCues = activeCues;
+                _model.set('captionsTrack', captionsTrack);
+            }
+        }
+        _currentCues = cues;
         return _currentCues;
     };
 
@@ -329,7 +349,7 @@ const CaptionsRenderer = function (_model) {
 
     _model.on('change:playlistItem', function () {
         _timeEvent = null;
-        _currentCues = [];
+        this.setCurrentCues([]);
     }, this);
 
     _model.on('change:captionsTrack', function (model, captionsTrack) {
@@ -337,7 +357,7 @@ const CaptionsRenderer = function (_model) {
     }, this);
 
     _model.mediaController.on('seek', function () {
-        _currentCues = [];
+        this.setCurrentCues([]);
     }, this);
 
     _model.mediaController.on('time seek', _timeChange, this);

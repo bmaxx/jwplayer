@@ -285,15 +285,6 @@ export default function Api(element) {
         },
 
         /**
-         * Gets the list of active video text tract (VTT) cues currently rendered to the display.
-         * If no cues are currently rendered, then an empty array is returned.
-         * @returns {Array.<VTTCue>}
-         */
-        getActiveCues() {
-            return core.get('captionsActiveCues');
-        },
-
-        /**
          * Gets a static representation of the player's model.
          * @returns {object}
          */
@@ -331,6 +322,24 @@ export default function Api(element) {
          */
         getCurrentCaptions() {
             return core.getCurrentCaptions();
+        },
+
+        /**
+         * Gets the list of active video text tract (VTT) cues currently rendered to the display.
+         * If no cues are currently rendered, then an empty array is returned.
+         * @returns {Array.<VTTCue>}
+         */
+        getActiveCues() {
+            const captionsTrack = core.get('captionsTrack');
+            if (captionsTrack && captionsTrack.activeCues) {
+                const cues = captionsTrack.activeCues;
+                let activeCues = [];
+                for (let i = 0; i < cues.length; i++) {
+                    activeCues.push(cues[i]);
+                }
+                activeCues.length = cues.length;
+                return activeCues;
+            }
         },
 
         /**
