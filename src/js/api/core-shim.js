@@ -168,7 +168,6 @@ Object.assign(CoreShim.prototype, {
             for (let i = 0; i < len; i++) {
                 activeCues.push(cues[i]);
             }
-            activeCues.length = cues.length;
             return activeCues;
         } else if (captionsTrack === null) {
             return [];

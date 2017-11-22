@@ -53,7 +53,6 @@ const CaptionsRenderer = function (_model) {
         this.setCurrentCues([]);
         _captionsTrack = captions;
         if (!captions) {
-            this.setCurrentCues([]);
             this.renderCues();
             return;
         }
@@ -108,7 +107,7 @@ const CaptionsRenderer = function (_model) {
         return this.setCurrentCues(cues);
     };
 
-    this.setCurrentCues = function(cues) {
+    this.setCurrentCues = function(cues = []) {
         // native rendering already has the captionsTrack.activeCues
         if (!_model.get('renderCaptionsNatively')) {
             let captionsTrack = _model.get('captionsTrack');
