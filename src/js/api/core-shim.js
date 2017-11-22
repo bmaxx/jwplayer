@@ -159,6 +159,23 @@ Object.assign(CoreShim.prototype, {
     getCurrentCaptions() {
         return this.get('captionsIndex');
     },
+    getActiveCues() {
+        const captionsTrack = this.get('captionsTrack');
+        if (captionsTrack) {
+            const cues = captionsTrack.activeCues || [];
+            let activeCues = [];
+            let len = cues.length || 0;
+            for (let i = 0; i < len; i++) {
+                activeCues.push(cues[i]);
+            }
+            activeCues.length = cues.length;
+            return activeCues;
+        } else if (captionsTrack === null) {
+            return [];
+        }
+
+        return undefined;
+    },
     getWidth() {
         return this.get('containerWidth');
     },

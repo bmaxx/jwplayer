@@ -330,16 +330,7 @@ export default function Api(element) {
          * @returns {Array.<VTTCue>}
          */
         getActiveCues() {
-            const captionsTrack = core.get('captionsTrack');
-            if (captionsTrack && captionsTrack.activeCues) {
-                const cues = captionsTrack.activeCues;
-                let activeCues = [];
-                for (let i = 0; i < cues.length; i++) {
-                    activeCues.push(cues[i]);
-                }
-                activeCues.length = cues.length;
-                return activeCues;
-            }
+            return core.getActiveCues();
         },
 
         /**
